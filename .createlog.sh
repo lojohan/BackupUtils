@@ -1,5 +1,5 @@
 #!/bin/bash
-LOGFILE=log/rsync.log
+LOGFILE=log/rsync"$(date +%F-%H:%M:%S)".log
 
 if [ ! -f "$LOGFILE" ]
 then
