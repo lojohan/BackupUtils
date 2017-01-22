@@ -1,5 +1,9 @@
 #!/bin/bash
-DIRECTORY=$1
-chmod -R 770 "$DIRECTORY" 
-#should take group and host as arguments
-chgrp -R familjen "$DIRECTORY"
+USER=$1
+HOST=$2
+DESTINATION=$3
+DIR=$4
+CHM=$5
+GRP=$6
+
+ssh "$USER"@"$HOST" "chmod -R "$CHM" "$DESTINATION""$DIR" ; chgrp -R "$GRP" "$DESTINATION""$DIR" && exit"

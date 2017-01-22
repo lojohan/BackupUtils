@@ -9,6 +9,10 @@ SOURCE=/home/johan/Desktop/
 
 DESTINATION=/media/lvm/samba/share/
 
+CHM=770
+
+GRP=familjen
+
 HOST=192.168.0.178
 
 HOSTSTATUS="$(./.waitforhost.sh)"
@@ -17,8 +21,7 @@ HOSTEXIT=$?
 if [ "$HOSTEXIT" -eq 0 ]
 then
 	OUTPUT="$HOSTSTATUS""$(rsync -avzi "$SOURCE""$DIR" "$USER"@"$HOST":"$DESTINATION"  2>&1)"
-	# should check exit code of previous operation first
-	ssh "$USER"@"$HOST" "chmod -R 770 "$DESTINATION""$DIR" ; chgrp -R familjen "$DESTINATION""$DIR" && exit"
+	./.setpermissions.sh "$USER" "$HOST" "$DESTINATION" "$DIR" "$CHM" "$GRP"
 fi
 if [ "$HOSTEXIT" -ne 0 ]
 then
