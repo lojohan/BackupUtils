@@ -20,8 +20,8 @@ HOSTEXIT=$?
 
 if [ "$HOSTEXIT" -eq 0 ]
 then
-	OUTPUT="$HOSTSTATUS""$(rsync -avzi "$SOURCE""$DIR" "$USER"@"$HOST":"$DESTINATION"  2>&1)"
-	./.setpermissions.sh "$USER" "$HOST" "$DESTINATION" "$DIR" "$CHM" "$GRP"
+	RSYNC="$HOSTSTATUS""$(rsync -avzi "$SOURCE""$DIR" "$USER"@"$HOST":"$DESTINATION"  2>&1)"
+	SETPERMS="$(./.setpermissions.sh "$USER" "$HOST" "$DESTINATION" "$DIR" "$CHM" "$GRP")"
 fi
 if [ "$HOSTEXIT" -ne 0 ]
 then
@@ -35,6 +35,7 @@ DELIMITER="\n------------------------------------\n"
 if [ -f "$LOG" ]
 then 
 	echo -e "$DATE" >> "$LOG"
-	echo -e "$OUTPUT" >> "$LOG"
+	echo -e "$RSYNC" >> "$LOG"
+	echo -r "$SETPERMS" >> "$LOG"
 	echo -e "$DELIMITER" >> "$LOG"
 fi
